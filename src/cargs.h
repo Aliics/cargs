@@ -15,6 +15,8 @@ typedef struct
 
 extern void ca_parse(int argc, char **argv);
 
+extern void ca_clear_parsed();
+
 extern void ca_create_flag(char *full_name);
 
 extern int ca_get_flag(char *full_name);
