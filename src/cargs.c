@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <memory.h>
 
-void ca_create_arg(char *name, CA_ArgType arg_type)
+void ca_create_arg(char *name, char short_name, CA_ArgType arg_type)
 {
     // Copy ca_def_args into tmp with +1 size for new arg.
     CA_DefArg *tmp = malloc(sizeof(CA_DefArg) * (ca_def_args_n + 1));
@@ -17,6 +17,7 @@ void ca_create_arg(char *name, CA_ArgType arg_type)
 
     CA_DefArg a = {
         .name = name,
+        .short_name = short_name,
         .arg_type = arg_type,
     };
     tmp[ca_def_args_n] = a;
@@ -24,20 +25,20 @@ void ca_create_arg(char *name, CA_ArgType arg_type)
     ca_def_args_n++;
 }
 
-void ca_create_flag(char *name)
+void ca_create_flag(char *name, char short_name)
 {
-    ca_create_arg(name, CA_ARG_FLAG);
+    ca_create_arg(name, short_name, CA_ARG_FLAG);
 }
 
-void ca_create_str(char *name)
+void ca_create_str(char *name, char short_name)
 {
-    ca_create_arg(name, CA_ARG_STR);
+    ca_create_arg(name, short_name, CA_ARG_STR);
 }
 
 
-void ca_create_int(char *name)
+void ca_create_int(char *name, char short_name)
 {
-    ca_create_arg(name, CA_ARG_INT);
+    ca_create_arg(name, short_name, CA_ARG_INT);
 }
 
 int ca_get_flag(char *name)

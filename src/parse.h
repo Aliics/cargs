@@ -12,6 +12,7 @@ CA_ArgType;
 typedef struct
 {
     char *name;
+    char short_name;
     CA_ArgType arg_type;
 } CA_DefArg;
 

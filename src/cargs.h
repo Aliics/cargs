@@ -3,11 +3,11 @@
 
 #include "parse.h"
 
-extern void ca_create_flag(char *name);
+extern void ca_create_flag(char *name, char short_name);
 
-extern void ca_create_str(char *name);
+extern void ca_create_str(char *name, char short_name);
 
-extern void ca_create_int(char *name);
+extern void ca_create_int(char *name, char short_name);
 
 extern int ca_get_flag(char *name);
 

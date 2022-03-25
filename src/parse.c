@@ -9,12 +9,27 @@ CA_Arg *ca_args;
 int ca_def_args_n;
 CA_DefArg *ca_def_args;
 
-CA_DefArg *get_def_arg(char *name)
+CA_DefArg *get_def_arg_full(char *name)
 {
     CA_DefArg *a = NULL;
     for (int i = 0; i < ca_def_args_n; i++)
     {
         if (strcmp(ca_def_args[i].name, name) == 0)
+        {
+            a = &ca_def_args[i];
+            break;
+        }
+    }
+
+    return a;
+}
+
+CA_DefArg *get_def_arg_short(char c)
+{
+    CA_DefArg *a = NULL;
+    for (int i = 0; i < ca_def_args_n; i++)
+    {
+        if (ca_def_args[i].short_name == c)
         {
             a = &ca_def_args[i];
             break;
@@ -48,14 +63,15 @@ int ca_parse(int argc, char **argv)
             continue;
 
         // A standard argument to be parsed.
-        if (a[0] == '-' && a[1] == '-')
+        if (a[0] == '-')
         {
-            CA_DefArg *cda = get_def_arg(&a[2]);
+            CA_DefArg *cda = a[1] == '-' ? get_def_arg_full(&a[2]) : get_def_arg_short(a[1]);
             if (cda == NULL)
                 return -1;
 
             CA_DefArg cda_copy = {
                 .name = cda->name,
+                .short_name = cda->short_name,
                 .arg_type = cda->arg_type,
             };
             CA_Arg ca;
