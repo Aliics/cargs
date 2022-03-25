@@ -43,6 +43,16 @@ void should_have_defined_string_arg_when_arg()
     assert(strcmp(ca_get_str("arg1"), "foo") == 0, "\"arg1\" was not \"foo\".");
 }
 
+void should_have_defined_int_arg_when_arg()
+{
+    ca_clear_parsed();
+    char *args[] = {".", "--arg1", "4711"};
+    ca_create_int("arg1");
+    int err = ca_parse(3, args);
+    assert(err == 0, "an error occurred.");
+    assert(ca_get_int("arg1") == 4711, "\"arg1\" was not 4711.");
+}
+
 void should_fail_when_given_undefined_arg()
 {
     ca_clear_parsed();
@@ -57,5 +67,6 @@ int main(void)
     should_have_defined_flag_when_arg();
     should_not_have_defined_flag_without_arg();
     should_have_defined_string_arg_when_arg();
+    should_have_defined_int_arg_when_arg();
     should_fail_when_given_undefined_arg();
 }

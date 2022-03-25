@@ -5,6 +5,7 @@ typedef enum
 {
     CA_ARG_FLAG,
     CA_ARG_STR,
+    CA_ARG_INT,
 }
 CA_ArgType;
 

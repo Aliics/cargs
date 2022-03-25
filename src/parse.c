@@ -26,12 +26,16 @@ CA_DefArg *get_def_arg(char *name)
 
 void add_arg(CA_Arg ca)
 {
-    ca_args_n++;
-    CA_Arg *tmp = malloc(sizeof(CA_Arg) * ca_args_n);
-    memcpy(tmp, ca_args, sizeof(CA_Arg) * (ca_args_n - 1));
+    CA_Arg *tmp = malloc(sizeof(CA_Arg) * (ca_args_n + 1));
+    if (ca_args_n > 0)
+        memcpy(tmp, ca_args, sizeof(CA_Arg) * ca_args_n);
 
-    tmp[ca_args_n - 1] = ca;
+    if (ca_args_n > 1)
+        free(ca_args);
+
+    tmp[ca_args_n] = ca;
     ca_args = tmp;
+    ca_args_n++;
 }
 
 int ca_parse(int argc, char **argv)
@@ -62,6 +66,7 @@ int ca_parse(int argc, char **argv)
                 ca.value = "";
                 break;
             case CA_ARG_STR:
+            case CA_ARG_INT:
                 ca.value = malloc(sizeof(char) * strlen(argv[i++]));
                 strcpy(ca.value, argv[i++]);
                 break;
@@ -76,9 +81,9 @@ int ca_parse(int argc, char **argv)
 
 void ca_clear_parsed()
 {
-    if (ca_def_args_n != 0)
+    if (ca_def_args_n > 0)
         free(ca_def_args);
-    if (ca_args_n != 0)
+    if (ca_args_n > 0)
         free(ca_args);
     ca_args_n = 0;
     ca_def_args_n = 0;
