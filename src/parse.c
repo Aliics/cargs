@@ -11,7 +11,7 @@ CA_DefArg *ca_def_args;
 
 CA_DefArg *get_def_arg(char *name)
 {
-    CA_DefArg *a;
+    CA_DefArg *a = NULL;
     for (int i = 0; i < ca_def_args_n; i++)
     {
         if (strcmp(ca_def_args[i].name, name) == 0)
@@ -34,7 +34,7 @@ void add_arg(CA_Arg ca)
     ca_args = tmp;
 }
 
-void ca_parse(int argc, char **argv)
+int ca_parse(int argc, char **argv)
 {
     for (int i = 0; i < argc; i++)
     {
@@ -48,7 +48,7 @@ void ca_parse(int argc, char **argv)
         {
             CA_DefArg *cda = get_def_arg(&a[2]);
             if (cda == NULL)
-                continue;
+                return -1;
 
             CA_DefArg cda_copy = {
                 .name = cda->name,
@@ -70,12 +70,14 @@ void ca_parse(int argc, char **argv)
             add_arg(ca);
         }
     }
+
+    return 0;
 }
 
 void ca_clear_parsed()
 {
     if (ca_def_args_n != 0)
-        free(ca_def_args);  
+        free(ca_def_args);
     if (ca_args_n != 0)
         free(ca_args);
     ca_args_n = 0;

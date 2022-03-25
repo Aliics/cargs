@@ -20,7 +20,7 @@ typedef struct
     char *value;
 } CA_Arg;
 
-extern void ca_parse(int argc, char **argv);
+extern int ca_parse(int argc, char **argv);
 
 extern void ca_clear_parsed();
 
